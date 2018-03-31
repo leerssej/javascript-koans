@@ -66,9 +66,11 @@ describe("About Higher Order Functions", function() {
     var onlyEven = [2,4,6];
     var mixedBag = [2,4,5,6];
 
-    var isEven = function(x) { return x % 2 === 0 };
+    // var isEven = function(x) { return x % 2 === 0 };
+    // function isEven(x) { return x % 2 === 0 };
+    const isEven = x => x % 2 === 0;
 
-    expect(_(onlyEven).any(isEven)).toBe(true);
+    expect(_(onlyEven).any(x => x % 2 === 0)).toBe(true);
     expect(_(mixedBag).any(isEven)).toBe(true);
   });
 

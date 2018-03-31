@@ -30,15 +30,20 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(productsICanEat.length).toBe(FILL_ME_IN);
+    expect(productsICanEat.length).toBe(1);
   });
 
   it("given I'm allergic to nuts and hate mushrooms, it should find a pizza I can eat (functional)", function () {
       var productsICanEat = [];
+      const isAnyIngredientMushrooms = item =>
+        !_(item.ingredients).any(ingredient => ingredient === 'mushrooms');
+      const areAllIngredientsNotMushrooms = item =>
+        _(item.ingredients).all(ingredient => ingredient !== 'mushrooms');
 
-      /* solve using filter() & all() / any() */
-
-      expect(productsICanEat.length).toBe(FILL_ME_IN);
+      productsICanEat = products.filter(item => item.containsNuts === false)
+      // productsICanEat = productsICanEat.filter(isAnyIngredientMushrooms);
+      productsICanEat = productsICanEat.filter(areAllIngredientsNotMushrooms);
+      expect(productsICanEat.length).toBe(1);
   });
 
   /*********************************************************************************/
@@ -52,13 +57,41 @@ describe("About Applying What We Have Learnt", function() {
       }
     }
     
-    expect(sum).toBe(FILL_ME_IN);
+    expect(sum).toBe(233168);
   });
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
-    var sum = FILL_ME_IN;    /* try chaining range() and reduce() */
+    // function makeIncreaseByFunction(increaseByAmount) {
+    //   return function (numberToIncrease) {
+    //     return numberToIncrease + increaseByAmount;
+    //   };
+    // }
 
-    expect(233168).toBe(FILL_ME_IN);
+    // const makeIncreaseByFactory = increaseByAmount =>
+    //   function (numberToIncrease) {
+    //     return numberToIncrease + increaseByAmount;
+    //   }
+
+    // const makeCurryFactory = increaseByAmount =>
+    //   numberToIncrease => numberToIncrease + increaseByAmount;
+
+function isMultOf(number) {
+   return function (numberToCheck) {
+     return numberToCheck % number === 0;
+   };
+}
+
+const isMultipleOf = number => numberToCheck => numberToCheck % number === 0; 
+
+const isMultipleOf3 = isMultipleOf(3);
+const isMultipleOf5 = isMultipleOf(5);
+
+  //  const isMultipleOf 
+    const sum = _.range(1, 1000)
+      .filter(x => (isMultipleOf3(x) || isMultipleOf5(x)))
+      .reduce((sum, num) => sum + num);    /* try chaining range() and reduce() */
+
+    expect(233168).toBe(sum);
   });
 
   /*********************************************************************************/
