@@ -119,7 +119,7 @@ describe("About Applying What We Have Learnt", function() {
   
   it("should find the largest prime factor of a composite number", function () {
 
-    // main function
+    // my qd functional approach
     const factor = x => {
       let factArr = [];
       let number = x;
@@ -132,13 +132,75 @@ describe("About Applying What We Have Learnt", function() {
           }
         });
       }
-      return Math.max(...factArr);
-    }      
-    expect(factor(63)).toBe(7);
-  });
+      return Math.max(...factArr); 
+    }
 
-  it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
+    // per https://gist.github.com/nefarioustim/3215506
+    // if array of factors desired then initialize and add
+    // push of factor into array at end of if statement
+        function getLargestPrimeFactor(n) {
+        let largestPrimeFactor;
+        let factor = 2;
+
+        while (n > 1) {
+          if (n % factor === 0) {
+            largestPrimeFactor = factor;
+            n = n / factor;
+            // to keep a lock up from squares happening
+            while (n % factor === 0) {
+              n = n / factor;
+            }
+          }
+          // to skip all evens after two
+          factor += (factor === 2) ? 1 : 2;
+        }
+
+        return largestPrimeFactor;
+      };      
+    // expect(factor(63)).toBe(7);
+    expect(getLargestPrimeFactor(75)).toBe(5);
+  });
+  it("should find the largest palindrome made from the product of two 3 digit numbers/n(imperatively)", function () {
+
     
+    // detect if product is palindrome
+        // split into array and reverse array
+      const reverseNumber = number => number.toString().split('').reverse().join('');
+      // check if reverse array is same as array
+    const isPalindrome = number => number.toString() === reverseNumber(number);
+
+    const isLargestPalindromeSoFar = (product, largestPalindrome) =>  
+      // if (palindrome > largestPalindrome) make largestPalindrome = palindrome;
+      isPalindrome(product) && (product > largestPalindrome);
+  
+    
+    function findLargestPalindrome() {
+      let largestPalindrome = 111;
+      // generate 3 digit number
+      for(let i = 100; i <= 999; i++) {
+        // generate second 3 digit number inside of first generator
+        for (let j = 100; j <= 999; j++) {
+          // multiply two 3 digit numbers
+          let product = i * j
+          // console.log(product);
+          // if palindrome, then test against saved palindrome
+          if (isLargestPalindromeSoFar(product, largestPalindrome)) {
+            largestPalindrome = product;
+          }
+          // if (isPalindrome(product) && (product > largestPalindrome)) {
+          //     largestPalindrome = product;
+          // }
+        }
+      }
+      return largestPalindrome;
+    }
+
+    expect(reverseNumber(1234)).toBe('4321');``
+    expect(isPalindrome('1231')).toBe(false);
+    expect(isPalindrome('1221')).toBe(true);
+    expect(isLargestPalindromeSoFar(122,123)).toBe(false)
+    expect(isLargestPalindromeSoFar(222,123)).toBe(true)
+    expect(findLargestPalindrome()).toBe(906609)
   });
 
   it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
