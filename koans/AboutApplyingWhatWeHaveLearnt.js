@@ -35,14 +35,24 @@ describe("About Applying What We Have Learnt", function() {
 
   it("given I'm allergic to nuts and hate mushrooms, it should find a pizza I can eat (functional)", function () {
       var productsICanEat = [];
-      const isAnyIngredientMushrooms = item =>
-        !_(item.ingredients).any(ingredient => ingredient === 'mushrooms');
-      const areAllIngredientsNotMushrooms = item =>
-        _(item.ingredients).all(ingredient => ingredient !== 'mushrooms');
-
-      productsICanEat = products.filter(item => item.containsNuts === false)
+      
+      // .any variant
+      // const isAnyIngredientMushrooms = item =>
+      //   !_(item.ingredients).any(ingredient => ingredient === 'mushrooms');
       // productsICanEat = productsICanEat.filter(isAnyIngredientMushrooms);
-      productsICanEat = productsICanEat.filter(areAllIngredientsNotMushrooms);
+      
+      // .all variant
+      // const areAllIngredientsNotMushrooms = item =>
+      //   _(item.ingredients).all(ingredient => ingredient !== 'mushrooms');
+      // productsICanEat = productsICanEat.filter(areAllIngredientsNotMushrooms);
+      
+      // functionally expressed
+      const nutFree = item => item.containsNuts === false;
+      
+      const mushroomFree = item => !item.ingredients.includes('mushrooms');
+      
+      productsICanEat = products.filter(mushroomFree).filter(nutFree);
+      
       expect(productsICanEat.length).toBe(1);
   });
 
@@ -61,32 +71,14 @@ describe("About Applying What We Have Learnt", function() {
   });
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
-    // function makeIncreaseByFunction(increaseByAmount) {
-    //   return function (numberToIncrease) {
-    //     return numberToIncrease + increaseByAmount;
-    //   };
-    // }
 
-    // const makeIncreaseByFactory = increaseByAmount =>
-    //   function (numberToIncrease) {
-    //     return numberToIncrease + increaseByAmount;
-    //   }
+    // multipleTester Factory
+    const isMultipleOf = number => numberToCheck => numberToCheck % number === 0; 
 
-    // const makeCurryFactory = increaseByAmount =>
-    //   numberToIncrease => numberToIncrease + increaseByAmount;
+    // multipleTesters
+    const isMultipleOf3 = isMultipleOf(3);
+    const isMultipleOf5 = isMultipleOf(5);
 
-function isMultOf(number) {
-   return function (numberToCheck) {
-     return numberToCheck % number === 0;
-   };
-}
-
-const isMultipleOf = number => numberToCheck => numberToCheck % number === 0; 
-
-const isMultipleOf3 = isMultipleOf(3);
-const isMultipleOf5 = isMultipleOf(5);
-
-  //  const isMultipleOf 
     const sum = _
       .range(1, 1000)
       .filter(x => (isMultipleOf3(x) || isMultipleOf5(x)))
@@ -107,12 +99,6 @@ const isMultipleOf5 = isMultipleOf(5);
 
     expect(ingredientCount['mushrooms']).toBe(2);
   });
-  const buildFreqDict = string =>
-    string.split('')
-    .reduce((freqDict, char) => {
-      freqDict[char] = (freqDict[char] || 0) + 1;
-      return freqDict;
-    }, {})
 
   it("should count the ingredient occurrence (functional)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
@@ -121,21 +107,29 @@ const isMultipleOf5 = isMultipleOf(5);
       .map(item => item.ingredients)
       .flatten()
       .reduce((count, ingredient) => {
-        console.log(count, ingredient);
         ingredientCount[ingredient] = (ingredientCount[ingredient] ||  0) + 1;
         return ingredientCount;
       }, ingredientCount);
-    /* chain() together map(), flatten() and reduce() */
 
-    console.log(ingredientCount)
     expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
   /* UNCOMMENT FOR EXTRA CREDIT */
-  /*
+  // const isMultipleOf2 = isMultipleOf(2);
+  // const isMultipleOf3 = isMultipleOf(3);
+  // const isMultipleOf5 = isMultipleOf(5);
+  // const isMultipleOf7 = isMultipleOf(7);
+  // const isMultipleOf11 = isMultipleOf(11);
+
   it("should find the largest prime factor of a composite number", function () {
-  
+    const factor = x => x / 3;  
+    
+
+
+    let largestFactor = factor(21);
+
+    expect(factor(24)).toBe(7);
   });
 
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
@@ -154,5 +148,5 @@ const isMultipleOf5 = isMultipleOf(5);
   it("should find the 10001st prime", function () {
 
   });
-  */
+  
 });
