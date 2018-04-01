@@ -87,7 +87,8 @@ const isMultipleOf3 = isMultipleOf(3);
 const isMultipleOf5 = isMultipleOf(5);
 
   //  const isMultipleOf 
-    const sum = _.range(1, 1000)
+    const sum = _
+      .range(1, 1000)
       .filter(x => (isMultipleOf3(x) || isMultipleOf5(x)))
       .reduce((sum, num) => sum + num);    /* try chaining range() and reduce() */
 
@@ -104,15 +105,30 @@ const isMultipleOf5 = isMultipleOf(5);
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
+  const buildFreqDict = string =>
+    string.split('')
+    .reduce((freqDict, char) => {
+      freqDict[char] = (freqDict[char] || 0) + 1;
+      return freqDict;
+    }, {})
 
   it("should count the ingredient occurrence (functional)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
-
+    
+    _(products).chain()
+      .map(item => item.ingredients)
+      .flatten()
+      .reduce((count, ingredient) => {
+        console.log(count, ingredient);
+        ingredientCount[ingredient] = (ingredientCount[ingredient] ||  0) + 1;
+        return ingredientCount;
+      }, ingredientCount);
     /* chain() together map(), flatten() and reduce() */
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    console.log(ingredientCount)
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
