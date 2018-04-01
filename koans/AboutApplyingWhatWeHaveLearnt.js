@@ -116,20 +116,66 @@ describe("About Applying What We Have Learnt", function() {
 
   /*********************************************************************************/
   /* UNCOMMENT FOR EXTRA CREDIT */
-  // const isMultipleOf2 = isMultipleOf(2);
-  // const isMultipleOf3 = isMultipleOf(3);
-  // const isMultipleOf5 = isMultipleOf(5);
-  // const isMultipleOf7 = isMultipleOf(7);
-  // const isMultipleOf11 = isMultipleOf(11);
-
+  
   it("should find the largest prime factor of a composite number", function () {
-    const factor = x => x / 3;  
+
+    // main function
+    const factor = x => {
+      let factArr = [];
+      let number = x;
+      
+      // factorizer factory
+      // const factorOut = number => numberToCheck => {
+      //   if (numberToCheck % number === 0) {
+      //     factArr.push(numberToCheck);
+      //     number /= numberToCheck;
+      //   }
+      // } 
+            
+      // singleton
+      // const factorOut3 = x => {
+        //   if(isMultipleOf3(x)) {
+      //     factArr.push(3);
+      //     num /= 3;
+      //   }
+      // }
+      // factorized 
+      
+      const primes = [2,3,5,7,11,13]
+      // console.log(x, num, isMultipleOf3(x))
+      while (number > 1) {
+        // console.log(x, num, isMultipleOf3(x))
+        primes.forEach(prime => {
+          // factorOut(prime);
+          if (number % prime === 0) {
+            factArr.push(prime);
+            number /= prime;
+          }
+        });
+        // factorOut2(x);
+        // factorOut3(x);
+        // factorOut5(x);
+        // factorOut7(x);
+        // factorOut11(x);
+        // factorOut13(x);
+        // if (isMultipleOf3(x)) {
+        //   factArr.push(3);
+        //   num /= 3; 
+        // }
+      }
+      return Math.max(...factArr);
+    }  
     
+    // check divisibility 
+    
+     // if is true then add to the factArr & divide number
+     // do while the number is greater than 1
+    // find largest prime factor
+      // find max of factorArr
 
 
-    let largestFactor = factor(21);
-
-    expect(factor(24)).toBe(7);
+    expect(factor(21)).toBe(7);
+    expect(factor(24)).toBe(2);
   });
 
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
