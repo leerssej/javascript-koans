@@ -123,59 +123,18 @@ describe("About Applying What We Have Learnt", function() {
     const factor = x => {
       let factArr = [];
       let number = x;
-      
-      // factorizer factory
-      // const factorOut = number => numberToCheck => {
-      //   if (numberToCheck % number === 0) {
-      //     factArr.push(numberToCheck);
-      //     number /= numberToCheck;
-      //   }
-      // } 
-            
-      // singleton
-      // const factorOut3 = x => {
-        //   if(isMultipleOf3(x)) {
-      //     factArr.push(3);
-      //     num /= 3;
-      //   }
-      // }
-      // factorized 
-      
-      const primes = [2,3,5,7,11,13]
-      // console.log(x, num, isMultipleOf3(x))
+      const primes = [2,3,5,7,11,13];
       while (number > 1) {
-        // console.log(x, num, isMultipleOf3(x))
         primes.forEach(prime => {
-          // factorOut(prime);
           if (number % prime === 0) {
             factArr.push(prime);
             number /= prime;
           }
         });
-        // factorOut2(x);
-        // factorOut3(x);
-        // factorOut5(x);
-        // factorOut7(x);
-        // factorOut11(x);
-        // factorOut13(x);
-        // if (isMultipleOf3(x)) {
-        //   factArr.push(3);
-        //   num /= 3; 
-        // }
       }
       return Math.max(...factArr);
-    }  
-    
-    // check divisibility 
-    
-     // if is true then add to the factArr & divide number
-     // do while the number is greater than 1
-    // find largest prime factor
-      // find max of factorArr
-
-
-    expect(factor(21)).toBe(7);
-    expect(factor(24)).toBe(2);
+    }      
+    expect(factor(63)).toBe(7);
   });
 
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
