@@ -169,7 +169,7 @@ describe("About Applying What We Have Learnt", function() {
       // check if reverse array is same as array
     const isPalindrome = number => number.toString() === reverseNumber(number);
 
-    const isLargestPalindromeSoFar = (largestPalindrome, product) =>  
+    const isLargestPalindromeSoFar = (product, largestPalindrome) =>  
       // if (palindrome > largestPalindrome) make largestPalindrome = palindrome;
       isPalindrome(product) && (product > largestPalindrome);
   
@@ -184,7 +184,7 @@ describe("About Applying What We Have Learnt", function() {
           let product = i * j
           // console.log(product);
           // if palindrome, then test against saved palindrome
-          if (isLargestPalindromeSoFar(product, largestPalindrome)) {
+          if (isPalindrome(product) && (product > largestPalindrome)) {
             largestPalindrome = product;
           }
           // if (isPalindrome(product) && (product > largestPalindrome)) {
@@ -195,7 +195,7 @@ describe("About Applying What We Have Learnt", function() {
       return largestPalindrome;
     }
 
-    expect(reverseNumber(1234)).toBe('4321');
+    expect(reverseNumber(1234)).toBe('4321');``
     expect(isPalindrome('1231')).toBe(false);
     expect(isPalindrome('1221')).toBe(true);
     expect(isLargestPalindromeSoFar(122,123)).toBe(false)
@@ -223,39 +223,31 @@ describe("About Applying What We Have Learnt", function() {
     // check if reverse array is same as array
     const isPalindrome = number => number.toString() === reverseNumber(number);
 
-    // get list of 3 digit numbers
-    let all3DigitNumbers = range(10, 13);
+    // get series(specified for all 3 digit numbers)
     const multiplyByAllMembersOfArray = (min, max, num2) => range(min, max).map(num1 => num1 * num2);
-    // // multiply against each other
+    // // multiply against each other and filter out only palindromes
     const multCrossPalindromes = (min, max) => 
-      range(min, max).map(num2 => multiplyByAllMembersOfArray(min, max, num2));
+      range(min, max)
+        .map(num2 => 
+          multiplyByAllMembersOfArray(min, max, num2)
+          .filter(num => isPalindrome(num))
+        )
     // flatten list down
     const flatCross = (min, max) => flattenArray(multCrossPalindromes(min, max));
-    // filter to just palindromes
-    const palindromeList = (min, max) => flatCross(min, max).filter(num => isPalindrome(num));
-
-    const isLargestPalindromeSoFar = (largestPalindrome, product) =>
-      // if (palindrome > largestPalindrome) make largestPalindrome = palindrome;
-      isPalindrome(product) && (product > largestPalindrome);
-
     // get the max or get reduce the largest
-    const getLargest = (min, max) =>
-      palindromeList(min, max).reduce((largestPalindrome, num) => {
+    const getLargestProductPalindrome = (min, max) =>
+      flatCross(min, max).reduce((largestPalindrome, num) => {
         if (num > largestPalindrome) largestPalindrome = num;
         return largestPalindrome;
-    }, max);
+      }, max);
 
-
-    // expect(range(100,999).length).toBe(899);
     expect(JSON.stringify(multiplyByAllMembersOfArray(10, 13, 1))).toBe('[10,11,12]');
     expect(multCrossPalindromes(10,13).length).toBe(3);
-    expect(flatCross(10, 13).length).toBe(9);
-    expect(JSON.stringify(palindromeList(10,13))).toBe('[121]');
-    // expect()
-    // console.time('findLargestPalindromefunctionally()');
-    // expect(findLargestPalindromeFunctionally(
-    // )).toBe(906609)
-    console.timeEnd('findLargestPalindromefunctionally()');
+    expect(flatCross(10, 13).length).toBe(1);
+    expect(getLargestProductPalindrome(10,13)).toBe(121);
+    console.time('getLargestProductPalindrome(100,999)');
+    expect(getLargestProductPalindrome(100,999)).toBe(906609);
+    console.timeEnd('getLargestProductPalindrome(100,999)');
   });
 
   it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
